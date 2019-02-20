@@ -7,4 +7,3 @@ Rails.application.config.middleware.use OmniAuth::Builder do
              verify_iss: false
            }
 end
-# http://localhost:3000/auth/google_oauth2

@@ -1,0 +1,5 @@
+<% @files.each do |file| %>
+  <h2>
+    <%= link_to file.name, { controller: "drive", action: "show", id: file.id }%>
+  </h2>
+<% end %>

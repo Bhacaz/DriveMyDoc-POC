@@ -3,5 +3,6 @@ Rails.application.routes.draw do
 
   get 'auth/:provider/callback', to: 'sessions#googleAuth'
   get 'auth/failure', to: redirect('/')
-  get 'drive', to: 'drive#show'
+  get 'drive', to: 'drive#index'
+  get 'drive/:id', to: 'drive#show'
 end

@@ -5,6 +5,6 @@ class SessionsController < ActionController::Base
     user = User.from_omniauth(access_token)
     session[:user_id] = user.id
     # Access_token is used to authenticate request made from the rails application to the google server
-    redirect_to controller: 'drive', action: 'show'
+    redirect_to controller: 'drive', action: 'index'
   end
 end
