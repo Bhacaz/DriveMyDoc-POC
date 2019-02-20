@@ -1,24 +1,51 @@
-# README
+# DriveMyDoc
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Why this project
 
-Things you may want to cover:
+Because as a dev and a Github user, I like using Markdown for many usage like documentation. Github Wikis are great but it's not everybody who I work with are comfortable with git, Github or event Markdown syntax. And Github Wikis cannot host any types of files.
 
-* Ruby version
+So to have anyone in one place and make everybody happy, I started **DriveMyDoc**.
 
-* System dependencies
 
-* Configuration
+## Why Google Drive
 
-* Database creation
+- Anyone can use it and already used to it
+- Document managing and editing through Google Drive
+- Document organisation and hierarchy through Google Drive
+- Access permission through Google Drive
+- Can manage and edit many type of files
 
-* Database initialization
 
-* How to run the test suite
+## Wanted feature
 
-* Services (job queues, cache servers, search engines, etc.)
+- List file from a given folder recursively has a table of content
+- Render certain type of files
+	- Markdown
+	- Image
+	- PDF
+- Search for a file through Google Drive API
+- Link to the file to
+	- Edit
+	- Download
+	- Sync
+- Table of content for the current file (only Markdown)
+- Easy way to updload attachements into Google Drive and retrive direct link
 
-* Deployment instructions
 
-* ...
+## Preview interface
+![Design](attachements/design.png)
+
+
+## Application information
+
+- Rails 5.2.2
+- Ruby 2.3.7
+- Database SQLite
+
+### Getting starting
+
+```bash
+bundle install
+bundle exec rake db:migrate
+rails server
+```
