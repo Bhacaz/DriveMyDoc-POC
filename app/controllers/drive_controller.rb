@@ -5,18 +5,37 @@ class DriveController < ActionController::Base
   before_action :init_drive_service
 
   def index
-    # https://drive.google.com/drive/folders/1ZrcMsg9vniVT2FpvjgZseGUG4SartwLz?usp=sharing
-    @files = @service.list_files
+    @files_hierarchy = @service.files_hierarchy
     render 'drive/index'
   end
 
   def show
-    # http://localhost:3000/drive/1ZrcMsg9vniVT2FpvjgZseGUG4SartwLz
-
     @file = @service.get_file(params[:id])
     @content = MarkdownService.render(DriveService.raw_content(@file))
     render 'drive/show'
   end
+
+  def render_list_files(files, html = [])
+    t = files.map do |file|
+      if file.is_a? Hash
+        folder = file.first.first
+        files = file.first.second
+        temp = ["<li><em> <a href=#{folder.web_view_link} target=\"_blank\">#{folder.name}</a><em/></li>"]
+        render_list_files(files, temp)
+      else
+        href = if file.mime_type.start_with?('text/')
+                 "/drive/#{file.id}"
+               else
+                 "#{file.web_view_link} target=\"_blank\" "
+               end
+        "<li><img src=#{file.icon_link}/> <a href=#{href}>#{file.name}</a> </li>"
+      end
+    end
+    html << '<ul>'
+    html.concat(t)
+    html << '</ul>'
+  end
+  helper_method :render_list_files
 
   private
 
