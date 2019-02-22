@@ -21,4 +21,14 @@ class DriveService
     fields ||= 'id, name, web_content_link, web_view_link'
     drive_service.get_file(id, fields: fields)
   end
+
+  def self.raw_content(file)
+    web_content_link =
+      if file.is_a? Google::Apis::DriveV3::File
+        file.web_content_link
+      else
+        file
+      end
+    URI.open(web_content_link).read
+  end
 end

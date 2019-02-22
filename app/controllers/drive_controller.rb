@@ -14,10 +14,7 @@ class DriveController < ActionController::Base
     # http://localhost:3000/drive/1ZrcMsg9vniVT2FpvjgZseGUG4SartwLz
 
     @file = @service.get_file(params[:id])
-
-    content = open(@file.web_content_link).read
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new, autolink: true, fenced_code_blocks: true)
-    @content = markdown.render(content).html_safe # rubocop:disable Rails/OutputSafety
+    @content = MarkdownService.render(DriveService.raw_content(@file))
     render 'drive/show'
   end
 
