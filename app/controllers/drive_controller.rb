@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # http://localhost:3000/auth/google_oauth2
 class DriveController < ActionController::Base
   require 'google/apis/drive_v3'
@@ -15,9 +16,6 @@ class DriveController < ActionController::Base
 
     response = drive_service.list_files(page_size: 10)
 
-
-    response.files.each { |f| p f.id }
-
     @files = response.files
     render 'drive/index'
   end
@@ -32,7 +30,7 @@ class DriveController < ActionController::Base
 
     file = drive_service.get_file(params[:id], fields: 'id, name, web_content_link, web_view_link')
 
-    puts file
+    # puts file
 
     @file = file
     # render 'drive/show'
@@ -41,8 +39,8 @@ class DriveController < ActionController::Base
     # require 'github/markup'
     #
     # GitHub::Markup.render(file.name, content)
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(hard_wrap: true, safe_links_only: true, escape_html: true, highlight: true), autolink: true, :fenced_code_blocks => true)
-    @content = markdown.render(content).html_safe
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(hard_wrap: true, safe_links_only: true, escape_html: true, highlight: true), autolink: true, fenced_code_blocks: true)
+    @content = markdown.render(content).html_safe # rubocop:disable Rails/OutputSafety
     render 'drive/show'
   end
 end
