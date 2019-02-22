@@ -4,13 +4,11 @@ class DriveService
   attr_accessor :drive_service
 
   def initialize(user_id)
-    user = User.find(user_id)
-
     require 'google/apis/drive_v3'
 
     @drive_service = Google::Apis::DriveV3::DriveService.new
     @drive_service.client_options.application_name = 'DriveMyDoc'
-    @drive_service.authorization = user.google_authorization
+    @drive_service.authorization = google_authorization(user_id)
   end
 
   def list_files(page_size: 10)
@@ -30,5 +28,21 @@ class DriveService
         file
       end
     URI.open(web_content_link).read
+  end
+
+  private
+
+  def google_authorization(user_id)
+    user = User.find(user_id)
+
+    scope = 'userinfo.email, drive'
+    Google::Auth::UserRefreshCredentials.new(
+      client_id: ENV['GOOGLE_CLIENT_ID'],
+      client_secret: ENV['GOOGLE_CLIENT_SECRET'],
+      scope: scope,
+      access_token: user.token,
+      refresh_token: user.refresh_token,
+      expires_at: user.expires_at
+    )
   end
 end
