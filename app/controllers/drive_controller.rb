@@ -16,6 +16,11 @@ class DriveController < ActionController::Base
     render 'drive/show'
   end
 
+  def search
+    @files = @service.search_files(query: params[:query])
+    render 'drive/search'
+  end
+
   def render_list_files(files, html = [])
     t = files.map do |file|
       if file.is_a? Hash
@@ -24,7 +29,7 @@ class DriveController < ActionController::Base
         temp = ["<li><em> <a href=#{folder.web_view_link} target=\"_blank\">#{folder.name}</a></em></li>"]
         render_list_files(files, temp)
       else
-        "<li><img src=#{file.icon_link}/> <a href=drive/#{file.id}>#{file.name}</a> </li>"
+        "<li><img src=#{file.icon_link}/> <a href=#{file.id}>#{file.name}</a> </li>"
       end
     end
     html << '<ul>'

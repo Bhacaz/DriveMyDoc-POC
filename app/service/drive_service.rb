@@ -3,6 +3,8 @@
 class DriveService
   attr_accessor :drive_service
 
+  FIELDS = 'nextPageToken, files(id, name, parents, webViewLink, iconLink, mime_type)'
+
   def initialize(user_id)
     require 'google/apis/drive_v3'
 
@@ -11,13 +13,22 @@ class DriveService
     @drive_service.authorization = google_authorization(user_id)
   end
 
-  def list_files(page_size: 10)
-    list_files_query(page_size: page_size).files
+  def list_files(page_size: 1000, **params)
+    list_files_query(page_size: page_size, **params).files
   end
 
   def get_file(id, fields: nil)
     fields ||= 'id, name, web_content_link, web_view_link'
     drive_service.get_file(id, fields: fields)
+  end
+
+  def search_files(query: nil)
+    params = { fields: FIELDS, page_size: 10 }
+    files_name = list_files(q: "name contains '#{query}'", **params)
+    files_text = list_files(q: "fullText contains '#{query}'", **params)
+    files_mime_type = list_files(q: "mimeType contains '#{query}'", **params)
+
+    [files_name, files_text, files_mime_type]
   end
 
   def files_hierarchy(parent_id: ENV['ROOT_FOLDER_ID'])
@@ -26,7 +37,7 @@ class DriveService
     params = {
       q: "'#{parent_id}' in parents",
       order_by: 'folder',
-      fields: 'nextPageToken, files(id, name, parents, webViewLink, iconLink, mime_type)'
+      fields: FIELDS
     }
 
     params.merge(page_token: page_token) if page_token
@@ -76,7 +87,7 @@ class DriveService
     )
   end
 
-  def list_files_query(page_size: 10)
-    drive_service.list_files(page_size: page_size)
+  def list_files_query(page_size: 1000, **params)
+    drive_service.list_files(page_size: page_size, **params)
   end
 end
