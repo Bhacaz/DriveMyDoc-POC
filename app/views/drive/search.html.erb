@@ -1,0 +1,9 @@
+
+<h3>File name</h3>
+<%= render_list_files(@files.first).join("\n").html_safe %>
+
+<h3>Content</h3>
+<%= render_list_files(@files.second).join("\n").html_safe %>
+
+<h3>File type</h3>
+<%= render_list_files(@files.third).join("\n").html_safe %>

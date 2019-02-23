@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[create destroy]
 
   get 'drive', to: 'drive#index'
+  get 'drive/search', to: 'drive#search'
   get 'drive/:id', to: 'drive#show'
 
   resource :home, only: [:show]
