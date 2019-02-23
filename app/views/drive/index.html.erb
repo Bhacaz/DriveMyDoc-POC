@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "application" %>
 
 <%= form_tag("/drive/search", method: "get") do %>
   <%= label_tag(:query, "Search for:") %>
@@ -6,4 +7,3 @@
 <% end %>
 
 <%= render_list_files(@files_hierarchy).join("\n").html_safe %>
-

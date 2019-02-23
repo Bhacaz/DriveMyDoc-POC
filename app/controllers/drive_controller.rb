@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# http://localhost:3000/auth/google_oauth2
 class DriveController < ActionController::Base
   before_action :init_drive_service
   helper_method :render_list_files, :render_file
@@ -12,7 +11,6 @@ class DriveController < ActionController::Base
 
   def show
     @file = @service.get_file(params[:id])
-    # @content = FileService.viewer_factory(@file)
     render 'drive/show'
   end
 
@@ -21,15 +19,17 @@ class DriveController < ActionController::Base
     render 'drive/search'
   end
 
+  private
+
   def render_list_files(files, html = [])
     t = files.map do |file|
       if file.is_a? Hash
         folder = file.first.first
         files = file.first.second
-        temp = ["<li><em> <a href=#{folder.web_view_link} target=\"_blank\">#{folder.name}</a></em></li>"]
+        temp = ["<li><h4> <a href=#{folder.web_view_link} target=\"_blank\">#{folder.name}</a></h4></li>"]
         render_list_files(files, temp)
       else
-        "<li><img src=#{file.icon_link}/> <a href=#{file.id}>#{file.name}</a> </li>"
+        "<li><img src=#{file.icon_link}/> <a href=/drive/#{file.id}>#{file.name}</a> </li>"
       end
     end
     html << '<ul>'
@@ -40,8 +40,6 @@ class DriveController < ActionController::Base
   def render_file
     FileService.viewer_factory(@file)
   end
-
-  private
 
   def init_drive_service
     @service = DriveService.new(session[:user_id])

@@ -13,8 +13,8 @@ class DriveService
     @drive_service.authorization = google_authorization(user_id)
   end
 
-  def list_files(page_size: 1000, **params)
-    list_files_query(page_size: page_size, **params).files
+  def list_files(**params)
+    list_files_query(**params).files
   end
 
   def get_file(id, fields: nil)
@@ -24,23 +24,18 @@ class DriveService
 
   def search_files(query: nil)
     params = { fields: FIELDS, page_size: 10 }
-    files_name = list_files(q: "name contains '#{query}'", **params)
-    files_text = list_files(q: "fullText contains '#{query}'", **params)
-    files_mime_type = list_files(q: "mimeType contains '#{query}'", **params)
-
-    [files_name, files_text, files_mime_type]
+    %w[name fullText mimeType].map do |search_field|
+      list_files(q: "#{search_field} contains '#{query}' and trashed = false", **params)
+    end
   end
 
   def files_hierarchy(parent_id: ENV['ROOT_FOLDER_ID'])
-    page_token = nil
-
     params = {
-      q: "'#{parent_id}' in parents",
+      q: "'#{parent_id}' in parents and trashed = false",
       order_by: 'folder',
-      fields: FIELDS
+      fields: FIELDS,
+      page_size: 1000
     }
-
-    params.merge(page_token: page_token) if page_token
 
     result = drive_service.list_files(**params)
     items = result.files.sort_by(&:name)
@@ -48,17 +43,24 @@ class DriveService
     hierarchy = []
 
     items&.each do |item|
-      next if item.name.start_with?('.')
+      next if item.name.start_with?('.') # hidden file and folders
 
       current_id = item.id
-
-      hierarchy << if item.mime_type == 'application/vnd.google-apps.folder'
-                     { item => files_hierarchy(parent_id: current_id) }
-                   else
-                     item
-                   end
+      hierarchy <<
+        if item.mime_type == 'application/vnd.google-apps.folder'
+          { item => files_hierarchy(parent_id: current_id) }
+        else
+          item
+        end
     end
-    hierarchy
+    hierarchy.sort_by do |file|
+      if file.is_a? Hash
+        # If is a Hash it's a folder. Adding "A" before to boost the sorting
+        "A#{file.first.first.name}"
+      else
+        file.name
+      end
+    end
   end
 
   def self.raw_content(file)
