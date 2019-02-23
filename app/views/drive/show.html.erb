@@ -1,7 +1,8 @@
 <%= stylesheet_link_tag "application" %>
-<%= link_to 'Return', action: 'index' %>
-<%= link_to 'Edit', @file.web_view_link %>
-<%= link_to 'Download', @file.web_content_link %>
-<div class="markdown-body">
-  <%= @content %>
+
+<div height="1em">
+  <%= link_to 'Return', action: 'index' %>
+  <%= link_to 'Edit', @file.web_view_link %>
+  <%= link_to 'Download', @file.web_content_link %>
 </div>
+<%= render_file.html_safe %>

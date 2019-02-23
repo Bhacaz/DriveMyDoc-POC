@@ -26,3 +26,10 @@
         padding: 15px;
     }
 }
+
+.viewer {
+    position: fixed;
+    bottom: 0.5em;
+    top: 2em;
+    width: 98%;
+}
