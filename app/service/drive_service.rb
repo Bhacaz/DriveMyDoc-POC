@@ -22,11 +22,17 @@ class DriveService
     drive_service.get_file(id, fields: fields)
   end
 
-  def search_files(query: nil)
+  def search_files(query: nil, folder_ids:)
     params = { fields: FIELDS, page_size: 10 }
-    %w[name fullText mimeType].map do |search_field|
-      list_files(q: "#{search_field} contains '#{query}' and trashed = false", **params)
+
+    text = []
+    name = []
+
+    folder_ids.each do |folder_id|
+      name.concat list_files(q: "'#{folder_id}' in parents and name contains '#{query}' and trashed = false", **params)
+      text.concat list_files(q: "'#{folder_id}' in parents and fullText contains '#{query}' and trashed = false", **params)
     end
+    [name, text]
   end
 
   def files_hierarchy(parent_id: ENV['ROOT_FOLDER_ID'])
