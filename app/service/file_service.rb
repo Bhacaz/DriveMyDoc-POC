@@ -15,8 +15,8 @@ class FileService
     if MARKDOWN_EXTENSION.include? info
       MarkdownViewerService.render file
     else
-      "<div class=\"viewer\">
-      <iframe src=\"https://docs.google.com/viewer?srcid=#{file.id}&pid=explorer&efh=false&a=v&chrome=false&embedded=true\" width=\"100%\" height=\"100%\"></iframe>
+      "<div class=\"embedded\">
+      <iframe src=\"https://docs.google.com/viewer?srcid=#{file.id}&pid=explorer&efh=false&a=v&chrome=false&embedded=true\" width=\"70%\" height=\"100%\"></iframe>
        </div>"
     end
   end

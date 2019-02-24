@@ -58,7 +58,7 @@ class DriveService
         # If is a Hash it's a folder. Adding "A" before to boost the sorting
         "A#{file.first.first.name}"
       else
-        file.name
+        "Z#{file.name}"
       end
     end
   end
