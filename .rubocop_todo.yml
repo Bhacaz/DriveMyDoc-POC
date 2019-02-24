@@ -50,3 +50,6 @@ Style/MixinUsage:
 # URISchemes: http, https
 Metrics/LineLength:
   Max: 185
+
+Metrics/AbcSize:
+  Enabled: false
