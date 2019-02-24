@@ -6,12 +6,9 @@ class DriveController < ActionController::Base
 
   def index
     @files_hierarchy = @service.files_hierarchy
+    @file = nil
+    @file = @service.get_file(params[:file_id]) if params[:file_id]
     render 'drive/index'
-  end
-
-  def show
-    @file = @service.get_file(params[:id])
-    render 'drive/show'
   end
 
   def search
@@ -29,10 +26,11 @@ class DriveController < ActionController::Base
         temp = ["<li><h4> <a href=#{folder.web_view_link} target=\"_blank\">#{folder.name}</a></h4></li>"]
         render_list_files(files, temp)
       else
-        "<li><img src=#{file.icon_link}/> <a href=/drive/#{file.id}>#{file.name}</a> </li>"
+        selected = file.id == @file&.id ? 'selected' : nil
+        "<li class=\"#{selected}\"><img src=#{file.icon_link}/> <a href=/drive?file_id=#{file.id}>#{file.name}</a> </li>"
       end
     end
-    html << '<ul>'
+    html << '<ul class="folder">'
     html.concat(t)
     html << '</ul>'
   end
