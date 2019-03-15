@@ -1,0 +1,10 @@
+version: '3'
+services:
+  drivemydoc:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      BUNDLER_VERSION: 2.0.1
+    env_file:
+      - .env
