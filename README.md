@@ -1,4 +1,7 @@
-# DriveMyDoc
+# DriveMyDoc-POC
+This is a proof of concept made with Ruby on Rails. A more front-end project will follow soon.
+
+---
 
 ## Why this project
 
