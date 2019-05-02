@@ -19,11 +19,20 @@ class DriveService
 
   def get_file(id, fields: nil)
     fields ||= 'id, name, web_content_link, web_view_link'
-    drive_service.get_file(id, fields: fields)
+    drive_service.get_file(
+      id,
+      fields: fields,
+      supports_team_drives: true
+    )
   end
 
   def search_files(query: nil, folder_ids:)
-    params = { fields: FIELDS, page_size: 10 }
+    params = {
+      fields: FIELDS,
+      page_size: 10,
+      supports_team_drives: true,
+      include_team_drive_items: true
+    }
 
     text = []
     name = []
@@ -40,10 +49,14 @@ class DriveService
       q: "'#{parent_id}' in parents and trashed = false",
       order_by: 'folder',
       fields: FIELDS,
-      page_size: 1000
+      page_size: 1000,
+      supports_team_drives: true,
+      include_team_drive_items: true
     }
 
-    result = drive_service.list_files(**params)
+    result = Rails.cache.fetch(parent_id, expires_in: 5.minutes) do
+      drive_service.list_files(**params)
+    end
     items = result.files.sort_by(&:name)
 
     hierarchy = []
