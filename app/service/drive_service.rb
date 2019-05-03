@@ -4,6 +4,7 @@ class DriveService
   attr_accessor :drive_service
 
   FIELDS = 'nextPageToken, files(id, name, parents, webViewLink, iconLink, mime_type)'
+  FOLDER_TYPE = 'application/vnd.google-apps.folder'
 
   def initialize(user_id)
     require 'google/apis/drive_v3'
@@ -66,7 +67,7 @@ class DriveService
 
       current_id = item.id
       hierarchy <<
-        if item.mime_type == 'application/vnd.google-apps.folder'
+        if item.mime_type == FOLDER_TYPE
           { item => files_hierarchy(parent_id: current_id) }
         else
           item

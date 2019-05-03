@@ -5,6 +5,7 @@ class DriveController < ActionController::Base
   helper_method :render_list_files, :render_file
 
   def index
+    @root_folder = @service.get_file(ENV['ROOT_FOLDER_ID'])
     @files_hierarchy = @service.files_hierarchy
     @file = nil
     @file = @service.get_file(params[:file_id]) if params[:file_id]
