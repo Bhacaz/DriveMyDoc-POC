@@ -6,7 +6,7 @@
     <ul class="right hide-on-med-and-down">
       <li>
           <div class="nav-bar-element">
-          <%= form_tag("/drive/search", method: "get") do %>
+          <%= form_tag("/drive/search", method: "get", class: 'width-15') do %>
             <%= text_field_tag(:query, nil,  placeholder: 'Search') %>
             <%= submit_tag("Search", hidden: true) %>
           <% end %>
