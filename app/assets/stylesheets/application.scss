@@ -14,7 +14,7 @@
 
 @import "materialize/components/color-variables";
 $primary-color: color("light-blue", "lighten-2") !default;
-$secondary-color: color("blue-grey", "lighten-21") !default;
+$secondary-color: color("blue-grey", "lighten-2") !default;
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 @import "materialize";
 
@@ -57,7 +57,7 @@ $secondary-color: color("blue-grey", "lighten-21") !default;
 }
 
 .collection-item.folder {
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 .collection {
@@ -65,6 +65,7 @@ $secondary-color: color("blue-grey", "lighten-21") !default;
   border-left: #e1f5fe 2px solid;
   border-bottom-width: 0;
   border-top-width: 0;
+  margin-top: 0;
 }
 
 .collection-item {
@@ -74,6 +75,8 @@ $secondary-color: color("blue-grey", "lighten-21") !default;
 
 .collection .collection-item {
   border-bottom-width: 0;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
 }
 
 .collection:hover {
@@ -81,7 +84,7 @@ $secondary-color: color("blue-grey", "lighten-21") !default;
 }
 
 .file-action {
-  height: 1em;
+  height: 2em;
   padding-left: 2em;
 }
 
