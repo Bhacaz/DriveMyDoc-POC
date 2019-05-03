@@ -1,10 +1,22 @@
 <%= stylesheet_link_tag "application" %>
 
-<%= form_tag("/drive/search", method: "get") do %>
-  <%= label_tag(:query, "Search for:") %>
-  <%= text_field_tag(:query) %>
-  <%= submit_tag("Search") %>
-<% end %>
+<nav>
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo">Logo</a>
+    <ul class="right hide-on-med-and-down">
+      <li>
+          <div class="nav-bar-element">
+          <%= form_tag("/drive/search", method: "get") do %>
+            <%= text_field_tag(:query, nil,  placeholder: 'Search') %>
+            <%= submit_tag("Search", hidden: true) %>
+          <% end %>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
 
 <div>
   <div class="side-bar">
