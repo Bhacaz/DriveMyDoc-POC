@@ -31,7 +31,7 @@ class DriveController < ActionController::Base
         render_list_files(files, temp)
       else
         selected = file.id == @file&.id ? 'active' : nil
-        "<a href=/drive?file_id=#{file.id} class=\"collection-item #{selected}\"><img src=#{file.icon_link}/>#{file.name}</a>"
+        "<a href=/drive?file_id=#{file.id} class=\"collection-item #{selected}\" id=\"#{file.id}\"><img src=#{file.icon_link}/>#{file.name}</a>"
       end
     end
     html << '<div class="collection">'

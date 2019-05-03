@@ -37,3 +37,9 @@
   </div>
 </div>
 
+<script>
+  <% if @file %>
+    let elmnt = document.getElementById("<%= @file.id %>");
+    elmnt.scrollIntoView();
+  <% end %>
+</script>
