@@ -54,7 +54,7 @@ class DriveService
       include_team_drive_items: true
     }
 
-    result = Rails.cache.fetch(parent_id, expires_in: 5.minutes) do
+    result = Rails.cache.fetch(parent_id, expires_in: 120.minutes) do
       drive_service.list_files(**params)
     end
     items = result.files.sort_by(&:name)

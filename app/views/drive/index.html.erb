@@ -6,7 +6,7 @@
   <%= submit_tag("Search") %>
 <% end %>
 
-<div class="container">
+<div>
   <div class="side-bar">
     <%= render_list_files(@files_hierarchy).join("\n").html_safe.force_encoding('UTF-8') %>
   </div>

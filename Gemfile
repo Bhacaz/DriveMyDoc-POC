@@ -43,6 +43,7 @@ gem 'google-api-client', '~> 0.8', require: 'google/apis/drive_v3'
 gem 'omniauth-google-oauth2'
 
 gem 'redcarpet'
+gem 'materialize-sass'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
