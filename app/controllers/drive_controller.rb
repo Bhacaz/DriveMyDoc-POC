@@ -27,16 +27,16 @@ class DriveController < ActionController::Base
         folder = file.first.first
         folder_ids << folder.id
         files = file.first.second
-        temp = ["<li><h4> <a href=#{folder.web_view_link} target=\"_blank\">#{folder.name}</a></h4></li>"]
+        temp = ["<a href=#{folder.web_view_link} target=\"_blank\" class=\"collection-item folder\">#{folder.name}</a>"]
         render_list_files(files, temp)
       else
-        selected = file.id == @file&.id ? 'selected' : nil
-        "<li class=\"#{selected}\"><img src=#{file.icon_link}/> <a href=/drive?file_id=#{file.id}>#{file.name}</a> </li>"
+        selected = file.id == @file&.id ? 'active' : nil
+        "<a href=/drive?file_id=#{file.id} class=\"collection-item #{selected}\"><img src=#{file.icon_link}/>#{file.name}</a>"
       end
     end
-    html << '<ul class="folder">'
+    html << '<div class="collection">'
     html.concat(t)
-    html << '</ul>'
+    html << '</div>'
   end
 
   def render_file

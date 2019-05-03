@@ -20,10 +20,12 @@
 
 <div class="main-container">
   <div class="side-bar">
-    <div height="1em">
-      <%= link_to 'Edit', @file.web_view_link %>
-      <%= link_to 'Download', @file.web_content_link %>
-    </div>
+    <% if @file %>
+      <div class="file-action">
+        <%= link_to 'Edit', @file.web_view_link %>
+        <%= link_to 'Download', @file.web_content_link %>
+      </div>
+    <% end %>
     <%= render_list_files(@files_hierarchy).join("\n").html_safe.force_encoding('UTF-8') %>
   </div>
 

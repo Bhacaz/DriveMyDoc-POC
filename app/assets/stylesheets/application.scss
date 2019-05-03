@@ -46,8 +46,39 @@
 
 .side-bar {
   flex: 1 0 0;
+  overflow: scroll;
+  margin-left: -1.1em;
 }
 
 .viewer {
   flex: 2 0 0;
+}
+
+.collection-item.folder {
+  font-size: 1.5em;
+}
+
+.collection {
+  margin-left: 1em;
+  border-left: lightgrey 1px solid;
+  border-bottom-width: 0;
+  border-top-width: 0;
+}
+
+.collection-item {
+  border-width: 0;
+  padding-left: 1em;
+}
+
+.collection .collection-item {
+  border-bottom-width: 0;
+}
+
+.collection:hover {
+  border-left: grey 2px solid;
+}
+
+.file-action {
+  height: 1em;
+  padding-left: 2em;
 }
