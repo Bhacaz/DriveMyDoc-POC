@@ -52,3 +52,16 @@ bundle install
 bundle exec rake db:migrate
 rails server
 ```
+### Docker
+
+**Build**
+
+```bash
+$ docker build -t drivemydoc .
+```
+
+**Run**
+
+```bash
+docker run -p 3000:3000 -e "GOOGLE_CLIENT_ID=<<ID>>.apps.googleusercontent.com" -e "GOOGLE_CLIENT_SECRET=<<SECRET>>" -e "ROOT_FOLDER_ID=<<FOLFER_ID>>" drivemydoc
+```
