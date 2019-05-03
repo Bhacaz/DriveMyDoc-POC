@@ -34,3 +34,16 @@
   padding-left: 2em;
   padding-right: 2em;
 }
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.side-bar {
+  flex: 1 0 0;
+}
+
+.viewer {
+  flex: 2 0 0;
+}
