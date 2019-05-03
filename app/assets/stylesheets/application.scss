@@ -38,6 +38,10 @@
 .main-container {
   display: flex;
   flex-direction: row;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  top: 5em;
 }
 
 .side-bar {
